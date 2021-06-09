@@ -4,13 +4,17 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 require('dotenv/config');
 
+const EmployeeRoute = require("./routes/employee");
 mongoose.connect(process.env.DB_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 const app = express();
+
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+
+app.use('/api/employee', EmployeeRoute);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT);
